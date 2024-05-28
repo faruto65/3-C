@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>3-C</title>
+        <meta name="description" content="">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://kit.fontawesome.com/4cb452c6bc.js" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
+        <script src="dashboard.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="dashboard.css">
+        <link rel="icon" href="/favicon.ico" />
+    </head>
+    <body>
+        <!-- sidebar section -->
+        <input type="checkbox" id="check">
+        <label for="check">
+            <i class="fa-solid fa-bars" id="hambargerBtn"></i>
+            <i class="fa-solid fa-times" id="cancel"></i>
+        </label>
+
+        <!-- sidebar section -->
+        <div class="sidebar">
+            <header>3-C</header>
+            <ul>
+                <li>
+                    <a href="#"><i class="fa-solid fa-calendar-days"></i>ダッシュボード</a>
+                </li>
+                <li>
+                    <a href="jikanwari.html"><i class="fa-solid fa-calendar-days"></i>時間割</a>
+                </li>
+                <li>
+                    <a href="homework"><i class="fa-solid fa-list-check"></i>宿題</a>
+                </li>
+            </ul>
+        </div>
+
+        <h1>ダッシュボード</h1>
+
+        <div class="container">
+            <div class="section">
+                <h2>今日の時間割</h2>
+                <ul id="today-schedule" class="list"></ul>
+            </div>
+            <div class="section">
+                <h2>明日の時間割</h2>
+                <ul id="tomorrow-schedule" class="list"></ul>
+            </div>
+            <div class="section">
+                <h2>明日締切の宿題</h2>
+                <ul id="homework-due-tomorrow" class="list"></ul>
+            </div>
+            <div class="section">
+                <h2>明日のイベント</h2>
+                <ul id="tomorrow-events" class="list"></ul>
+            </div>
+            <div class="section">
+                <h2>本日のイベント</h2>
+                <ul id="today-events" class="list"></ul>
+            </div>
+        </div>
+        <div class="bg"></div>
+    </body>
+</html>

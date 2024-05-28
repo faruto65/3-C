@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+.container {
+    width: 80%;
+    max-width: 800px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    overflow-y: auto;
+}
+.section {
+    margin-bottom: 20px;
+}
+.section h2 {
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+.list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.list > li {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+.list > li:hover {
+    background-color: #e0e0e0;
+}
