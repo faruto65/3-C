@@ -33,9 +33,9 @@ async function displayHomeworkDueToday() {
     const homeworkContainer = document.getElementById('homework-due-today');
     const todayStr = formatDate(today);
 
-    homeworkContainer.innerHTML = '';  // 前の内容をクリア
-
     const homeworkList = rows.filter(row => row[0] === todayStr);
+    homeworkContainer.innerHTML = '';  // Clear previous content
+
     if (homeworkList.length === 0) {
         const listItem = createListItem('なし');
         homeworkContainer.appendChild(listItem);
@@ -54,9 +54,9 @@ async function displayHomeworkDueTomorrow() {
     const homeworkContainer = document.getElementById('homework-due-tomorrow');
     const tomorrowStr = formatDate(tomorrow);
 
-    homeworkContainer.innerHTML = '';  // 前の内容をクリア
-
     const homeworkList = rows.filter(row => row[0] === tomorrowStr);
+    homeworkContainer.innerHTML = '';  // Clear previous content
+
     if (homeworkList.length === 0) {
         const listItem = createListItem('なし');
         homeworkContainer.appendChild(listItem);
@@ -77,11 +77,11 @@ async function displayEvents() {
     const todayStr = formatDate(today);
     const tomorrowStr = formatDate(tomorrow);
 
-    todayEventsContainer.innerHTML = '';  // 前の内容をクリア
-    tomorrowEventsContainer.innerHTML = '';  // 前の内容をクリア
-
     const todayEvents = rows.filter(row => row[0] === todayStr);
     const tomorrowEvents = rows.filter(row => row[0] === tomorrowStr);
+
+    todayEventsContainer.innerHTML = '';  // Clear previous content
+    tomorrowEventsContainer.innerHTML = '';  // Clear previous content
 
     if (todayEvents.length === 0) {
         const listItem = createListItem('なし');
@@ -116,8 +116,8 @@ async function displaySchedule() {
     const todayScheduleContainer = document.getElementById('today-schedule');
     const tomorrowScheduleContainer = document.getElementById('tomorrow-schedule');
 
-    todayScheduleContainer.innerHTML = '';  // 前の内容をクリア
-    tomorrowScheduleContainer.innerHTML = '';  // 前の内容をクリア
+    todayScheduleContainer.innerHTML = '';  // Clear previous content
+    tomorrowScheduleContainer.innerHTML = '';  // Clear previous content
 
     let todayFound = false;
     let tomorrowFound = false;
