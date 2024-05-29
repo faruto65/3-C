@@ -27,11 +27,34 @@ function createListItem(text) {
     return li;
 }
 
+async function displayHomeworkDueToday() {
+    const data = await fetchSheetData(homeworkRange);
+    const rows = data.values.slice(1);
+    const homeworkContainer = document.getElementById('homework-due-today');
+    const todayStr = formatDate(today);
+
+    homeworkContainer.innerHTML = '';  // 前の内容をクリア
+
+    const homeworkList = rows.filter(row => row[0] === todayStr);
+    if (homeworkList.length === 0) {
+        const listItem = createListItem('なし');
+        homeworkContainer.appendChild(listItem);
+    } else {
+        homeworkList.forEach(row => {
+            const [dueDate, subject, content] = row;
+            const listItem = createListItem(`${subject}: ${content}`);
+            homeworkContainer.appendChild(listItem);
+        });
+    }
+}
+
 async function displayHomeworkDueTomorrow() {
     const data = await fetchSheetData(homeworkRange);
     const rows = data.values.slice(1);
     const homeworkContainer = document.getElementById('homework-due-tomorrow');
     const tomorrowStr = formatDate(tomorrow);
+
+    homeworkContainer.innerHTML = '';  // 前の内容をクリア
 
     const homeworkList = rows.filter(row => row[0] === tomorrowStr);
     if (homeworkList.length === 0) {
@@ -53,6 +76,9 @@ async function displayEvents() {
     const tomorrowEventsContainer = document.getElementById('tomorrow-events');
     const todayStr = formatDate(today);
     const tomorrowStr = formatDate(tomorrow);
+
+    todayEventsContainer.innerHTML = '';  // 前の内容をクリア
+    tomorrowEventsContainer.innerHTML = '';  // 前の内容をクリア
 
     const todayEvents = rows.filter(row => row[0] === todayStr);
     const tomorrowEvents = rows.filter(row => row[0] === tomorrowStr);
@@ -90,6 +116,9 @@ async function displaySchedule() {
     const todayScheduleContainer = document.getElementById('today-schedule');
     const tomorrowScheduleContainer = document.getElementById('tomorrow-schedule');
 
+    todayScheduleContainer.innerHTML = '';  // 前の内容をクリア
+    tomorrowScheduleContainer.innerHTML = '';  // 前の内容をクリア
+
     let todayFound = false;
     let tomorrowFound = false;
 
@@ -121,6 +150,7 @@ async function displaySchedule() {
 }
 
 async function initialize() {
+    await displayHomeworkDueToday();
     await displayHomeworkDueTomorrow();
     await displayEvents();
     await displaySchedule();
