@@ -51,4 +51,9 @@ async function initialize() {
     });
 }
 
+function toggleVisibility(element) {
+    element.style.display = element.style.display === 'none' || element.style.display === '' ? 'block' : 'none';
+}
+
+
 window.onload = initialize;
