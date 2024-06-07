@@ -37,8 +37,18 @@ function createScheduleTable(data) {
 }
 
 async function initialize() {
-    const data = await fetchScheduleData();
-    createScheduleTable(data);
+    const scheduleData = await fetchScheduleData();
+    const imageUrls = await fetchImageUrls();
+    createScheduleTable(scheduleData, imageUrls);
+
+    const toggleButton = document.getElementById('toggleButton');
+    const scheduleContainer = document.getElementById('scheduleContainer');
+    const imageContainer = document.getElementById('imageContainer');
+
+    toggleButton.addEventListener('click', () => {
+        toggleVisibility(scheduleContainer);
+        toggleVisibility(imageContainer);
+    });
 }
 
 window.onload = initialize;
