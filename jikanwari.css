@@ -88,3 +88,10 @@ h1 {
     height: auto;
     border-radius: 8px;
 }
+
+.schedule-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 10px 0;
+}

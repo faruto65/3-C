@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>3-C</title>
-        <meta name="description" content="">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://kit.fontawesome.com/4cb452c6bc.js" crossorigin="anonymous"></script>
-        <script src="jikanwari.js"></script>
-        <script src="script.js"></script>
-        <link rel="stylesheet" href="jikanwari.css">
-        <link rel="stylesheet" href="style.css">
-        <link rel="icon" href="/favicon.ico" />
-    </head>
-    <body>
-        <!-- sidebar section -->
-        <input type="checkbox" id="check">
-        <label for="check">
-            <i class="fa-solid fa-bars" id="hambargerBtn"></i>
-            <i class="fa-solid fa-times" id="cancel"></i>
-        </label>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3-C</title>
+    <meta name="description" content="">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/4cb452c6bc.js" crossorigin="anonymous"></script>
+    <script src="jikanwari.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="jikanwari.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/favicon.ico" />
+</head>
+<body>
+    <!-- sidebar section -->
+    <input type="checkbox" id="check">
+    <label for="check">
+        <i class="fa-solid fa-bars" id="hambargerBtn"></i>
+        <i class="fa-solid fa-times" id="cancel"></i>
+    </label>
 
-        <!-- sidebar section -->
-        <div class="sidebar">
-            <header>3-c</header>
-            <ul>
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-gauge"></i>ダッシュボード</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa-solid fa-calendar-days"></i>時間割</a>
-                </li>
-                <li>
-                    <a href="homework.html"><i class="fa-solid fa-list-check"></i>宿題</a>
-                </li>
-            </ul>
+    <!-- sidebar section -->
+    <div class="sidebar">
+        <header>3-c</header>
+        <ul>
+            <li>
+                <a href="index.html"><i class="fa-solid fa-gauge"></i>ダッシュボード</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-calendar-days"></i>時間割</a>
+            </li>
+            <li>
+                <a href="homework.html"><i class="fa-solid fa-list-check"></i>宿題</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>時間割</h1>
+        <button id="toggleButton">画像表示に切り替え</button>
+        <div id="scheduleContainer">
+            <ul id="schedule" class="schedule"></ul>
         </div>
-        <div class="container">
-            <h1>時間割</h1>
-            <button id="toggleButton">画像表示に切り替え</button>
-            <div id="scheduleContainer">
-                <ul id="schedule" class="schedule"></ul>
-            </div>
-            <div id="imageContainer" style="display: none;">
-                <img id="scheduleImage" src="https://drive.google.com/uc?id=1-AbgYUOYiTPvmUmtwhpfrSl2HpeYMRoM" alt="時間割画像">
-            </div>
-        </div>
-        <div class="bg"></div>
-    </body>
+        <div id="imageContainer" style="display: none;"></div>
+    </div>
+    <div class="bg"></div>
+</body>
 </html>
