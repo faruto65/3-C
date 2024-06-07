@@ -1,16 +1,7 @@
-const apiKey = '1RLNa8jHR55u_16SIK93J3daMxR1PhhbsHf_PMWamNkc';
+const apiKey = 'AIzaSyAiKmGF_oEbf1-i2JPBGFHM282pCcMlZr8';
 const spreadsheetId = '1RLNa8jHR55u_16SIK93J3daMxR1PhhbsHf_PMWamNkc';
 const range = '時間割';
-const driveFolderId = '1-AbgYUOYiTPvmUmtwhpfrSl2HpeYMRoM';
-
-document.addEventListener('DOMContentLoaded', () => {
-    fetchScheduleData().then(data => {
-        createScheduleTable(data);
-    });
-
-    const toggleButton = document.getElementById('toggleButton');
-    toggleButton.addEventListener('click', toggleDisplayMode);
-});
+const folderId = '1-AbgYUOYiTPvmUmtwhpfrSl2HpeYMRoM';  // Google DriveフォルダID
 
 async function fetchScheduleData() {
     const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`);
@@ -18,34 +9,22 @@ async function fetchScheduleData() {
     return data;
 }
 
-async function fetchDriveImages() {
-    const response = await fetch(`https://www.googleapis.com/drive/v3/files?q='${driveFolderId}'+in+parents&key=${apiKey}&fields=files(id,name)`);
+async function fetchImageUrls() {
+    const response = await fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}&fields=files(id,name,mimeType)`);
     const data = await response.json();
-    return data.files.filter(file => file.mimeType === 'image/jpeg');
+    const imageUrls = data.files
+        .filter(file => file.mimeType.startsWith('image/'))
+        .map(file => `https://drive.google.com/uc?export=view&id=${file.id}`);
+    return imageUrls;
 }
 
-function toggleDisplayMode() {
-    const scheduleContainer = document.getElementById('scheduleContainer');
-    const imageContainer = document.getElementById('imageContainer');
-    const toggleButton = document.getElementById('toggleButton');
-
-    if (scheduleContainer.style.display === 'none') {
-        scheduleContainer.style.display = 'block';
-        imageContainer.style.display = 'none';
-        toggleButton.textContent = '画像表示に切り替え';
-    } else {
-        scheduleContainer.style.display = 'none';
-        imageContainer.style.display = 'block';
-        toggleButton.textContent = 'テキスト表示に切り替え';
-
-        fetchDriveImages().then(images => {
-            displayImages(images);
-        });
-    }
+function toggleVisibility(element) {
+    element.style.display = element.style.display === 'none' || element.style.display === '' ? 'block' : 'none';
 }
 
-function createScheduleTable(data) {
+function createScheduleTable(data, imageUrls) {
     const scheduleContainer = document.getElementById('schedule');
+    const imageContainer = document.getElementById('imageList');
     const dates = data.values[0].slice(1);
     const times = data.values.slice(1);
 
@@ -55,49 +34,51 @@ function createScheduleTable(data) {
         dateLi.textContent = dates[i];
 
         const scheduleUl = document.createElement('ul');
+        const imageUl = document.createElement('ul');
 
         for (let j = 0; j < times.length; j++) {
             const timeLi = document.createElement('li');
             timeLi.textContent = times[j][0] + ': ' + (times[j][i + 1] || '授業なし');
             scheduleUl.appendChild(timeLi);
+
+            const imageLi = document.createElement('li');
+            const imageUrl = imageUrls[j]; // 画像URLを取得
+            if (imageUrl) {
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = 'Schedule Image';
+                imageLi.appendChild(img);
+            } else {
+                imageLi.textContent = '画像なし';
+            }
+            imageUl.appendChild(imageLi);
         }
 
         dateLi.appendChild(scheduleUl);
-        dateLi.addEventListener('click', () => toggleVisibility(scheduleUl));
+        dateLi.appendChild(imageUl);
+        dateLi.addEventListener('click', () => {
+            toggleVisibility(scheduleUl);
+            toggleVisibility(imageUl);
+        });
+
         scheduleContainer.appendChild(dateLi);
+        imageContainer.appendChild(dateLi.cloneNode(true)); // clone for image container
     }
 }
 
-function toggleVisibility(element) {
-    element.style.display = element.style.display === 'none' || element.style.display === '' ? 'block' : 'none';
-}
+async function initialize() {
+    const scheduleData = await fetchScheduleData();
+    const imageUrls = await fetchImageUrls();
+    createScheduleTable(scheduleData, imageUrls);
 
-function displayImages(images) {
+    const toggleButton = document.getElementById('toggleButton');
+    const scheduleContainer = document.getElementById('scheduleContainer');
     const imageContainer = document.getElementById('imageContainer');
-    imageContainer.innerHTML = '';
 
-    images.forEach(image => {
-        const img = document.createElement('img');
-        img.src = `https://drive.google.com/uc?id=${image.id}`;
-        img.alt = image.name;
-        img.className = 'schedule-image';
-
-        const dateLi = document.createElement('li');
-        dateLi.className = 'date-header';
-        dateLi.textContent = formatDateFromFileName(image.name);
-
-        const imageUl = document.createElement('ul');
-        const imageLi = document.createElement('li');
-        imageLi.appendChild(img);
-        imageUl.appendChild(imageLi);
-
-        dateLi.appendChild(imageUl);
-        dateLi.addEventListener('click', () => toggleVisibility(imageUl));
-        imageContainer.appendChild(dateLi);
+    toggleButton.addEventListener('click', () => {
+        toggleVisibility(scheduleContainer);
+        toggleVisibility(imageContainer);
     });
 }
 
-function formatDateFromFileName(fileName) {
-    const [year, month, day] = fileName.split(' ')[0].split('-');
-    return `${year}/${month}/${day}`;
-}
+window.onload = initialize;
