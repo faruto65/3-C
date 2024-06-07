@@ -1,4 +1,4 @@
-const apiKey = 'YOUR_API_KEY';
+const apiKey = '1RLNa8jHR55u_16SIK93J3daMxR1PhhbsHf_PMWamNkc';
 const spreadsheetId = '1RLNa8jHR55u_16SIK93J3daMxR1PhhbsHf_PMWamNkc';
 const range = '時間割';
 const driveFolderId = '1-AbgYUOYiTPvmUmtwhpfrSl2HpeYMRoM';
@@ -19,7 +19,7 @@ async function fetchScheduleData() {
 }
 
 async function fetchDriveImages() {
-    const response = await fetch(`https://www.googleapis.com/drive/v3/files?q='${driveFolderId}'+in+parents&key=${apiKey}`);
+    const response = await fetch(`https://www.googleapis.com/drive/v3/files?q='${driveFolderId}'+in+parents&key=${apiKey}&fields=files(id,name)`);
     const data = await response.json();
     return data.files.filter(file => file.mimeType === 'image/jpeg');
 }
